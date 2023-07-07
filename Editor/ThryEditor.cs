@@ -478,6 +478,8 @@ namespace Thry
             Presets.PresetEditorGUI(this);
             ShaderTranslator.SuggestedTranslationButtonGUI(this);
 
+            GUICustomPoiMSS();
+
             //PROPERTIES
             foreach (ShaderPart part in MainGroup.parts)
             {
@@ -495,6 +497,23 @@ namespace Thry
             HandleEvents();
 
             IsDrawing = false;
+        }
+
+        private void GUICustomPoiMSS()
+        {
+            var type = Type.GetType("Poi.Tools.ModularShaderSystem.ModularShadersForThryEditor, Poi.Tools");
+            if (type != null)
+            {
+                type.GetMethod("GUICustomPoiMSS").Invoke(null, new object[1] {this});
+            }
+        }
+        private void GUICustomPoiMSSTopBar()
+        {
+            var type = Type.GetType("Poi.Tools.ModularShaderSystem.ModularShadersForThryEditor, Poi.Tools");
+            if (type != null)
+            {
+                type.GetMethod("GUICustomPoiMSSTopBar").Invoke(null, new object[1] {this});
+            }
         }
 
         private void GUIManualReloadButton()
@@ -553,6 +572,7 @@ namespace Thry
             {
                 Presets.OpenPresetsMenu(GUILayoutUtility.GetLastRect(), this);
             }
+            GUICustomPoiMSSTopBar();
 
             //draw master label text after ui elements, so it can be positioned between
             if (_shaderHeader != null && !drawAboveToolbar) _shaderHeader.Draw(new CRect(mainHeaderRect));
